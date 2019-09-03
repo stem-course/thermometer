@@ -15,11 +15,6 @@
   Connect pin1 of dht11 to pin 5V of Arduino
   Connect pin2 of dht11 to pin A0 of Arduino
   Connect pin4 of dht11 to pin GND of Arduino
-
-  Connections for LED:
-  Connect the longer leg of the LED to pin 3 of Arduino
-  Connect shorter leg of LED to one leg of a resistor
-  Connect the other leg of resistor to GND pin of Arduino
 */
 
 #include <dht11.h>                  //Do not edit
