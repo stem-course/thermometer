@@ -1,45 +1,46 @@
-/*
-  Code by: www.munphurid.com
-  M.Hashir
 
-  This is a code that shows temperature of a room
+/*
+  Code by Wardah Arshad
+
+  This is a code for temperature and humidity sensor
+
   Hardware:
   - Arduino
-  - LM35 (Temperature sensor)
+  - 3 male to female wires
+  - Munphurid dht11 module (Can be bought from www.munphurid.com)
 
+  When sensor holes side is facing towards you with legs downward, the left most pin is pin 1.
 
-  Connections:
-  (When flat side of LM35 faces you with legs downward, leftmost is pin 1)
+  Connections for DHT11:
+  Connect pin1 of dht11 to pin 5V of Arduino
+  Connect pin2 of dht11 to pin A0 of Arduino
+  Connect pin4 of dht11 to pin GND of Arduino
 
-  Connect pin1 of LM35 to pin 5V of Arduino
-  Connect pin2 of LM35 to pin A0 of Arduino
-  Connect pin3 of LM35 to pin GND of Arduino
+  Connections for LED:
+  Connect the longer leg of the LED to pin 3 of Arduino
+  Connect shorter leg of LED to one leg of a resistor
+  Connect the other leg of resistor to GND pin of Arduino
 */
 
-
-int LM35 = A0;      //LDR is connected to pin A0 of Arduino
-int input;          //Will be used later on
-float temperature;    //Will be used later on
-
+#include <dht11.h>                  //Do not edit
+int dht_sensorpin = A0;             //Pin on which DHT sensor is connected
+dht11 DHT;                          //Do not edit
+int humidity;                       //Do not edit
+int temperature;                    //Do not edit
+int LED = 3;                        //pin on which Led is connected
 
 void setup() {
-
-  pinMode(LM35, INPUT_PULLUP);   //Donot edit this line
-
-  Serial.begin(9600);          //Donot edit this line
+  Serial.begin(9600);               //Do not edit... sets speed of communication
+  delay(1000);                      //Do not edit
 }
 
-
 void loop() {
+  DHT.read(dht_sensorpin);                          //Do not edit this line
+  humidity = DHT.humidity;                          //Do not edit this line
+  temperature = DHT.temperature;                   //Do not edit this line
 
-  input = analogRead(LM35);      //Taking input from LM35 Temperature sensor
-
-  temperature = (input / 1024.0) * 500.0  ;        //Conversion of units
-  temperature = temperature / 10.0;
-  Serial.print("The temperature in Centrigrade is = ");      //Print this text on screen
-  Serial.println(temperature);    //Show the temperature on screen
-
-  delay(1000);                    //Wait for sometime before taking the next input
-
-  //now go to the start of void loop()
+  Serial.print("The temperature in Centrigrade is = ");             //Donot edit this line
+  Serial.print(temperature);                     //Do not edit this line
+  Serial.println(" C");                         //Do not edit this line
+  delay(5000);                                  //Wait for 5000 milliseconds
 }
