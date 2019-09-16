@@ -1,46 +1,54 @@
-
 /*
-  Code by: www.munphurid.com
-  M.Hashir
+Code by:
+M.Hashir
 
-  This is a code that shows temperature of a room
-  Hardware:
-  - Arduino
-  - 3 male to female wires
-  - Munphurid dht11 module (Can be bought from www.munphurid.com)
+This is a code that display temperature and humidity measured by sensor
 
-  When sensor is facing towards you with legs downward, the left most pin is pin 1.
+Hardware:
+-Arduino
+-DHT11 sensor (temperature and humidity sensor)
 
-  Connections:
-  Connect pin1 of dht11 to pin 5V of Arduino
-  Connect pin2 of dht11 to pin A0 of Arduino
-  Connect pin4 of dht11 to pin GND of Arduino
+Connections:
+When perforated side (side with holes) of DHT sensor is towards you, the left most leg is pin 1 and right most leg is pin 4
+Connect pin 1 of DHT11 to 5V pin of Arduino
+Connect pin 2 of DHT11 to pin 2 of Arduino
+Connect pin 4 of DHT11 to GND pin of Arduino
 */
-#include <dht11.h>
 
-int dht_sensorpin = A0;           //Pin on which DHT sensor is connected
-dht11 DHT;                        //LDR is connected to pin A0 of Arduino
-int input;                        //Will be used later on
-float temperature;                //Will be used later on
+#include <DHT.h>      //Install this library using library manager
+
+int DHTPIN = 2;     //DHT is connected to this pin
+#define DHTTYPE DHT11   // We are using this model of DHT..... DHT11... Do not edit this
+
+DHT dht(DHTPIN, DHTTYPE); //Do not edit this line
 
 
-void setup() {
+float hum;  //Do not edit
+float temp; //Do not edit
 
-  pinMode(dht_sensorpin, INPUT_PULLUP);     //Donot edit this line
-
-  Serial.begin(9600);                       //Donot edit this line
+void setup() 
+{
+  Serial.begin(9600);
+  Serial.println("DHT11 sensor testing");   //Print this on Serial monitor when program starts
+  dht.begin();                //Do not edit
 }
 
+void loop() 
+{ 
+    float converted = 0.00; //Do not edit
+        
+    hum = dht.readHumidity();         //Read Humidity value from sensor
+    temp= dht.readTemperature();      //Read temperature value from sensor
 
-void loop() {
+    Serial.print("Celsius = ");     //Print this on Serial monitor
+    Serial.print(temp);             //Print temperature on Serial monitor
+    
+    //Print degree symbol
+    Serial.write(176);                      //Do not edit
+    Serial.println("C");                    //Do not edit
 
-  input = analogRead(dht_sensorpin);                          //Taking input from LM35 Temperature sensor
+    Serial.print("Humidity =");       //Print this on Serial monitor
+    Serial.println(hum);              //Print value of humidity on Serial monitor
 
-  temperature = (input / 1024.0) * 500.0  ;                   //Conversion of units
-  temperature = temperature / 20.0;
-  Serial.print("The temperature in Centrigrade is = ");       //Print this text on screen
-  Serial.println(temperature);                                //Show the temperature on screen
-
-  delay(1000);                                                //Wait for sometime before taking the next input
-
-  //now go to t
+    delay(2000);          //Wait for 2 seconds
+}
