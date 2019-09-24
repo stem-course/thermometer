@@ -18,7 +18,7 @@ Connect pin 4 of dht11 to pin GND of Arduino
 
 */
 #include <dht11.h>                    //Install this library using library manager
-int dhtpin= 2;                        //DHT11 is connected to pin 2
+int dht_pin= 2;                        //DHT11 is connected to pin 2
  
 dht11 DHT;
  
@@ -33,7 +33,7 @@ void setup(){
  
 void loop(){
   
-    DHT.read(dht_apin);                            //Read Humidity and Temperature value from sensor
+    DHT.read(dht_pin);                            //Read Humidity and Temperature value from sensor
     
     Serial.print("Current humidity = ");           //Print this on Serial monitor
     Serial.print(DHT.humidity);                    //Print the value of Humidity on serial monitor
